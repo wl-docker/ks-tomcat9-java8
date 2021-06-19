@@ -21,7 +21,7 @@ LABEL io.kubesphere.s2i.version.maven="3.5.4" \
 EXPOSE 8080
 
 ENV TOMCAT_VERSION 9.0.46
-
+ENV LANG en_US.UTF-8
 USER root
 
 # Get and Unpack Tomcat
@@ -30,7 +30,8 @@ RUN apk add --update curl \
  && curl http://archive.apache.org/dist/tomcat/tomcat-9/v${TOMCAT_VERSION}/bin/apache-tomcat-${TOMCAT_VERSION}.tar.gz -o /tmp/catalina.tar.gz \
  && tar xzf /tmp/catalina.tar.gz -C /opt \
  && ln -s /opt/apache-tomcat-${TOMCAT_VERSION} /opt/tomcat \
- && rm /tmp/catalina.tar.gz
+ && rm /tmp/catalina.tar.gz \
+ && apk add --update ttf-dejavu fontconfig
 
 # Add roles
 ADD tomcat-users.xml /opt/apache-tomcat-${TOMCAT_VERSION}/conf/
